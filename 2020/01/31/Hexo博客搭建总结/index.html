@@ -108,14 +108,18 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"># github</span><br><span class="line">Host github.com</span><br><span class="line">HostName ssh.github.com</span><br><span class="line">PreferredAuthentications publickey</span><br><span class="line">IdentityFile ~&#x2F;.ssh&#x2F;github_id_rsa</span><br><span class="line"># gitee</span><br><span class="line">Host gitee.com</span><br><span class="line">HostName gitee.com</span><br><span class="line">PreferredAuthentications publickey</span><br><span class="line">IdentityFile ~&#x2F;.ssh&#x2F;gitee_id_rsa</span><br><span class="line"># gitee</span><br><span class="line">Host wyh.gitee.com</span><br><span class="line">HostName gitee.com</span><br><span class="line">PreferredAuthentications publickey</span><br><span class="line">IdentityFile ~&#x2F;.ssh&#x2F;gitee_wyh_rsa</span><br></pre></td></tr></table></figure>
 <p> 其中Host和HostName填写git服务器的域名，IdentityFile指定私钥的路径，Host不能重复，但可以指向同一个HostName,因此给第二个gitee Host命其他名。</p>
 <h2 id="3-Hexo博客多平台一键部署"><a href="#3-Hexo博客多平台一键部署" class="headerlink" title="3.Hexo博客多平台一键部署"></a>3.Hexo博客多平台一键部署</h2><p> 因为考虑到在国内，Gitee Pages要比Github Pages访问速度快得多，便将博客同步部署到Gitee一份。</p>
-<p> 在博客的配置文件<code>_config.yml</code>中，添加：<br> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"> deploy:</span><br><span class="line">- type: git</span><br><span class="line">  repo: https:&#x2F;&#x2F;github.com&#x2F;...&#x2F;xxx.github.io.git</span><br><span class="line">  branch: master</span><br><span class="line">- type: git</span><br><span class="line">  repo: https:&#x2F;&#x2F;gitee.com&#x2F;xxx&#x2F;xxx.git</span><br><span class="line">  branch: master</span><br></pre></td></tr></table></figure><br>  将repo改为自己的仓库地址。</p>
-<p>  运行<code>hexo d</code>命令后，将依次部署到Github Pages和Gitee Pages。</p>
+<p>我实践了两种办法：</p>
+<p><strong>方法一、同步Github仓库到Gitee</strong></p>
+<p>首先，导入Github仓库到Gitee，码云和Github的导入和同步参见：<a href="https://gitee.com/help/articles/4284" target="_blank" rel="noopener">GitHub仓库快速导入Gitee及同步更新</a>。</p>
+<p>然后，每次部署完之后，同步一次就可以。</p>
 <blockquote>
-<p>注意：Gitee Pages服务需要在仓库<code>服务</code>选项中手动开启，如果博客显示404，检查是否忘了开启。（比较坑的是，需要绑定手机号才能开启Gitee Pages。）</p>
+<p>注意：Gitee Pages服务需要在仓库<code>服务</code>选项中手动开启，如果博客显示404，检查是否忘了开启。（比较坑的是，需要绑定手机号。）</p>
 <img src="/2020/01/31/Hexo%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E6%80%BB%E7%BB%93/giteepages%E6%9C%8D%E5%8A%A1.png" class=""> 
 </blockquote>
-<p>码云和Github的同步参见：<a href="https://gitee.com/help/articles/4284" target="_blank" rel="noopener">GitHub仓库快速导入Gitee及同步更新</a>。</p>
-<p>如果Gitee仓库名称和自己的个性地址不一致，会导致一些资源404，具体解决方法见<a href="https://gitee.com/help/articles/4136" target="_blank" rel="noopener">码云Pages</a>。</p>
+<p><strong>方法二、<code>hexo d</code>一键部署到两个平台</strong></p>
+<p> 在博客的配置文件<code>_config.yml</code>中，添加：<br> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"> deploy:</span><br><span class="line">- type: git</span><br><span class="line">  repo: https:&#x2F;&#x2F;github.com&#x2F;...&#x2F;xxx.github.io.git</span><br><span class="line">  branch: master</span><br><span class="line">- type: git</span><br><span class="line">  repo: https:&#x2F;&#x2F;gitee.com&#x2F;xxx&#x2F;xxx.git</span><br><span class="line">  branch: master</span><br></pre></td></tr></table></figure><br>  将repo改为自己的仓库地址。</p>
+<p>  运行<code>hexo d</code>命令后，将依次部署到Github Pages和Gitee Pages。</p>
+<p>由于Gitee仓库名称和自己的个性地址不一致，会导致一些资源404，具体解决方法见<a href="https://gitee.com/help/articles/4136" target="_blank" rel="noopener">码云Pages</a>。</p>
 <p>还有一个小插曲，部署时，Gitee提示权限错误：<br>  <img src="/2020/01/31/Hexo%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E6%80%BB%E7%BB%93/gitee%E6%9D%83%E9%99%90%E6%8A%A5%E9%94%99.png" class=""><br>发现错误原因是之前保存了实验室Gitee账号的账号密码，在控制面板\用户帐户\凭据管理器将其删除即可。<br>  </p>
 <p>然后重新执行<code>hexo d</code>就可以成功部署两个平台了：</p>
 <img src="/2020/01/31/Hexo%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E6%80%BB%E7%BB%93/gitee%E6%9D%83%E9%99%90%E6%88%90%E5%8A%9F.jpg" class="">
@@ -127,7 +131,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/01/31/Hexo%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E6%80%BB%E7%BB%93/" data-id="ck63pia3o0000vwto8nk25ydt"
+      <a data-url="http://yoursite.com/2020/01/31/Hexo%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E6%80%BB%E7%BB%93/" data-id="ck63q1wd200002gto40wackmr"
          class="article-share-link">Share</a>
       
     </footer>
