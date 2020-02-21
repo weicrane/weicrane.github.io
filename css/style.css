@@ -2343,11 +2343,21 @@ pre .javascript .function {
   bottom: 0;
   width: 100%;
 }
-.logo {
+.github-logo {
   text-align: center;
 }
-.logo img {
-  width: 4.2rem;
+.github-logo img {
+  width: 32px;
+  height: 32px;
+}
+.github-logo a span {
+  display: none;
+}
+.github-logo:hover a span {
+  display: initial;
+}
+.github-logo:hover a img {
+  display: none;
 }
 .totop {
   position: relative;
