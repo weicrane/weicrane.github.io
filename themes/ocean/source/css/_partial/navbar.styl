@@ -51,8 +51,20 @@
   bottom 0
   width 100%
 
-.logo
+.github-logo
   text-align center
   img
-    width brand-size
+    width 32px
+    height 32px
+  
+.github-logo a span {
+  display: none;
+}
 
+.github-logo:hover a span {
+  display: initial;
+}
+
+.github-logo:hover a img {
+  display: none;
+}

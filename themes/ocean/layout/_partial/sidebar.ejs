@@ -1,15 +1,33 @@
 <button class="navbar-toggle"></button>
+<style type="text/css">
+  #github-logo a span {
+    display: none;
+  }
+
+  #github-logo:hover a span {
+    display: initial;
+  }
+
+  #github-logo:hover a img {
+    display: none;
+  }
+</style>
 <nav class="navbar">
   <% if (theme.brand){ %>
-    <div class="logo">
-      <a href="<%- url_for() %>"><img src="<%- theme.brand %>" alt="<%= config.title %>"></a>
-    </div>
+  <div class="github-logo">
+    <a href="https://github.com/weicrane">
+      <img src="<%- theme.brand %>" alt="My Github">
+      <span>
+        <p>To My Github</p>
+      </span>
+    </a>
+  </div>
   <% } %>
-  <ul class="nav nav-main">
+  <ul class=" nav nav-main">
     <% for (var i in theme.menu){ %>
-      <li class="nav-item">
-        <a class="nav-item-link" href="<%- url_for(theme.menu[i]) %>"><%= i %></a>
-      </li>
+    <li class="nav-item">
+      <a class="nav-item-link" href="<%- url_for(theme.menu[i]) %>"><%= i %></a>
+    </li>
     <% } %>
     <li class="nav-item">
       <a class="nav-item-link nav-item-search" title="<%= __('search') %>">
@@ -26,9 +44,9 @@
     </li>
     <li class="nav-item">
       <% if (theme.rss){ %>
-        <a class="nav-item-link" target="_blank" href="<%- url_for(theme.rss) %>" title="<%= __('rss_feed') %>">
-          <i class="fe fe-feed"></i>
-        </a>
+      <a class="nav-item-link" target="_blank" href="<%- url_for(theme.rss) %>" title="<%= __('rss_feed') %>">
+        <i class="fe fe-feed"></i>
+      </a>
       <% } %>
     </li>
   </ul>
