@@ -22,9 +22,19 @@
 <link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
 
   
+  <!-- 图片查看器库类 -->
+  
+<link rel="stylesheet" href="/css/viewer.min.css">
+
+
   <link rel="preload" href="/images/ocean/ocean.mp4" as="video" type="video/mp4">
   <link rel="preload" href="/images/ocean/ocean.ogv" as="video" type="video/ogg">
   <link rel="preload" href="/images/ocean/ocean.webm" as="video" type="video/webm">
+  <!-- 引入图片查看器库类 -->
+  
+<script src="/js/viewer.min.js"></script>
+
+
   
 <script src="/js/pace.min.js"></script>
 
@@ -32,14 +42,13 @@
 <body>
 <main class="content">
   <section class="outer">
-  
+  <article id="post-Hexo博客搭建总结" class="article article-type-post" itemscope
+  itemprop="blogPost" data-scroll-reveal>
 
-<article id="post-Hexo博客搭建总结" class="article article-type-post" itemscope itemprop="blogPost" data-scroll-reveal>
-  
   <div class="article-inner">
     
-      <header class="article-header">
-        
+    <header class="article-header">
+      
   
     <h1 class="article-title" itemprop="name">
       Hexo博客搭建总结
@@ -50,24 +59,24 @@
 
 
 
-      </header>
+    </header>
     
 
     
-      <div class="article-meta">
-        <a href="/2020/01/31/Hexo%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E6%80%BB%E7%BB%93/" class="article-date">
+    <div class="article-meta">
+      <a href="/2020/01/31/Hexo%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E6%80%BB%E7%BB%93/" class="article-date">
   <time datetime="2020-01-31T08:37:56.000Z" itemprop="datePublished">2020-01-31</time>
 </a>
-        
+      
   <div class="article-category">
     <a class="article-category-link" href="/categories/%E5%8D%9A%E5%AE%A2%E6%80%BB%E7%BB%93/">博客总结</a>
   </div>
 
-      </div>
+    </div>
     
 
     
-      
+    
     <div class="tocbot"></div>
 
 
@@ -83,7 +92,7 @@
       
 
       
-        <p>在使用Hexo博客过程中，遇到的主要的问题和解决方法，主要有：</p>
+      <p>在使用Hexo博客过程中，遇到的主要的问题和解决方法，主要有：</p>
 <ul>
 <li><p>多设备编辑和同步</p>
 </li>
@@ -148,12 +157,11 @@
 <h2 id="4-Markdown写作插图"><a href="#4-Markdown写作插图" class="headerlink" title="4.Markdown写作插图"></a>4.Markdown写作插图</h2><p>由于写博文的时候，需要插入图片，利用网上的图床总有这那的缺点，因为图片不多，干脆直接放到文章对应的资源文件夹里。文章资源文件夹可以在<code>_config.yml</code>中修改配置<code>post_asset_folder</code>为<code>true</code>：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">post_asset_folder: true</span><br></pre></td></tr></table></figure>
 <p>在执行<code>$ hexo new post_name</code>命令后，会自动生成同名文件夹，<del>将图片放在其中利用相对路径访问即可（参考<a href="https://yanyinhong.github.io/2017/05/02/How-to-insert-image-in-hexo-post/" target="_blank" rel="noopener">Hexo博客搭建之在文章中插入图片 - yanyinhong的个人博客</a>）</del>。<br>由于Hexo 3.0版本以后，使用相对路径的常规 markdown 语法<code>![](/example.jpg)</code>，图片将不会正常显示，因此采用官方推荐的标签插件<code></code>，不过这样在写MarkDown的时候，无法实时预览，感觉有点值得吐槽。</p>
-
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kity@2.0.4/dist/kity.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text/javascript" src="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.css">
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/01/31/Hexo%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E6%80%BB%E7%BB%93/" data-id="ck7478wgf0000rkto3qikeilu"
-         class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2020/01/31/Hexo%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E6%80%BB%E7%BB%93/" data-id="ck74wjslk0002qsto5adx766v" class="article-share-link">Share</a>
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%8D%9A%E5%AE%A2/" rel="tag">博客</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%80%BB%E7%BB%93/" rel="tag">总结</a></li></ul>
 
@@ -162,7 +170,7 @@
   </div>
 
   
-    
+  
   <nav class="article-nav">
     
       <a href="/2020/02/26/%E5%89%8D%E7%AB%AF%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%80%EF%BC%89/" class="article-nav-link">
@@ -181,13 +189,40 @@
   
 
   
-    
+  
   
 
 </article>
 
-
-
+<!-- 图片查看器实例配置 -->
+<script type="text/javascript">
+  //默认设置， 可以根据个人需求和喜好进行配置
+  //详细参考官方说明
+  Viewer.setDefaults({
+    //设置初始缩放 default: 1
+    zoomRatio: [0.5],
+    //设置滚轮缩放比率 default: 0.1
+    show: function () {
+      this.viewer.zoomTo(0.5);
+    },
+  });
+  //获得content中所有的图片， 不同主题可能有所不同
+  //为了和其他的图片区别开来 所以在markdown中插入图片的时候使用独特的记号
+  //为了一次性得到所有的图片我这里采用的是class = 'article-image'
+  var article = document.querySelector('.content');
+  var imageList = article.getElementsByClassName('article-image');
+  //将获取到的HTMLCollections转化成Array
+  var imageArray = new Array();
+  Array.prototype.forEach.call(imageList, element => {
+    imageArray.push(element);
+  });
+  //设置每个图片成为图片组
+  Array.prototype.forEach.call(imageList, element => {
+    var viewer1 = new Viewer(element);
+    viewer1.images = imageArray;
+    viewer1.length = imageArray.length;
+  });
+</script>
 </section>
   <footer class="footer">
   <div class="outer">
@@ -207,7 +242,6 @@
     </ul>
   </div>
 </footer>
-
 </main>
 <aside class="sidebar">
   <button class="navbar-toggle"></button>
