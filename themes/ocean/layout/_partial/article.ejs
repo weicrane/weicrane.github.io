@@ -1,53 +1,79 @@
+<article id="<%= post.layout %>-<%= post.slug %>" class="article article-type-<%= post.layout %>" itemscope
+  itemprop="blogPost" data-scroll-reveal>
 
-
-<article id="<%= post.layout %>-<%= post.slug %>" class="article article-type-<%= post.layout %>" itemscope itemprop="blogPost" data-scroll-reveal>
-  
   <div class="article-inner">
     <% if (post.link || post.title){ %>
-      <header class="article-header">
-        <%- partial('post/title', {class_name: 'article-title'}) %>
-      </header>
+    <header class="article-header">
+      <%- partial('post/title', {class_name: 'article-title'}) %>
+    </header>
     <% } %>
 
     <% if (index || is_post()) { %>
-      <div class="article-meta">
-        <%- partial('post/date', {class_name: 'article-date', date_format: null}) %>
-        <%- partial('post/category') %>
-      </div>
+    <div class="article-meta">
+      <%- partial('post/date', {class_name: 'article-date', date_format: null}) %>
+      <%- partial('post/category') %>
+    </div>
     <% } %>
 
     <% if (theme.toc && is_post()){ %>
-      <%- partial('post/tocbot') %>
+    <%- partial('post/tocbot') %>
     <% } %>
 
     <div class="article-entry" itemprop="articleBody">
       <%- partial('post/justifiedGallery') %>
       <%- partial('post/gallery') %>
       <% if (post.excerpt && index){ %>
-        <%- post.excerpt %>
-        <% if (theme.excerpt_link){ %>
-          <a class="article-more-link" href="<%- url_for(post.path) %>"><%= theme.excerpt_link %></a>
-        <% } %>
+      <%- post.excerpt %>
+      <% if (theme.excerpt_link){ %>
+      <a class="article-more-link" href="<%- url_for(post.path) %>"><%= theme.excerpt_link %></a>
+      <% } %>
       <% } else { %>
-        <%- post.content %>
+      <%- post.content %>
       <% } %>
     </div>
     <footer class="article-footer">
-      <a data-url="<%- post.permalink %>" data-id="<%= post._id %>"
-         class="article-share-link"><%= __('share') %></a>
+      <a data-url="<%- post.permalink %>" data-id="<%= post._id %>" class="article-share-link"><%= __('share') %></a>
       <%- partial('post/tag') %>
     </footer>
 
   </div>
 
   <% if (!index){ %>
-    <%- partial('post/nav') %>
+  <%- partial('post/nav') %>
   <% } %>
 
   <% if (is_post()) { %>
-    <%- partial('post/gitalk') %>
+  <%- partial('post/gitalk') %>
   <%} %>
 
 </article>
 
-
+<!-- 图片查看器实例配置 -->
+<script type="text/javascript">
+  //默认设置， 可以根据个人需求和喜好进行配置
+  //详细参考官方说明
+  Viewer.setDefaults({
+    //设置初始缩放 default: 1
+    zoomRatio: [0.5],
+    //设置滚轮缩放比率 default: 0.1
+    show: function () {
+      this.viewer.zoomTo(0.5);
+    },
+  });
+  //获得content中所有的图片， 不同主题可能有所不同
+  //为了和其他的图片区别开来 所以在markdown中插入图片的时候使用独特的记号
+  //为了一次性得到所有的图片我这里采用的是class = 'article-image'
+  var article = document.querySelector('.content');
+  var imageList = article.getElementsByClassName('article-image');
+  //将获取到的HTMLCollections转化成Array
+  var imageArray = new Array();
+  Array.prototype.forEach.call(imageList, element => {
+    imageArray.push(element);
+  });
+  //设置每个图片成为图片组
+  Array.prototype.forEach.call(imageList, element => {
+    var viewer1 = new Viewer(element);
+    viewer1.images = imageArray;
+    viewer1.length = imageArray.length;
+  });
+</script>

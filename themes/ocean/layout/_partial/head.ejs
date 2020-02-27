@@ -41,8 +41,14 @@
   <% if (theme.fancybox){ %>
   <%- css('fancybox/jquery.fancybox.min') %>
   <% } %>
+  <!-- 图片查看器库类 -->
+  <%- css('css/viewer.min.css') %>
+
   <link rel="preload" href="/images/ocean/ocean.mp4" as="video" type="video/mp4">
   <link rel="preload" href="/images/ocean/ocean.ogv" as="video" type="video/ogg">
   <link rel="preload" href="/images/ocean/ocean.webm" as="video" type="video/webm">
+  <!-- 引入图片查看器库类 -->
+  <%- js('/js/viewer.min.js') %>
+
   <%- js('/js/pace.min.js') %>
 </head>
