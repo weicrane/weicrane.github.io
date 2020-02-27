@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>
+    给hexo博文页面加入图片查看器 |
+    
+    Yihe Wei</title>
+  
+  <link rel="shortcut icon" href="/favicon.ico">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  <!-- 图片查看器库类 -->
+  
+<link rel="stylesheet" href="/css/viewer.min.css">
+
+
+  <link rel="preload" href="/images/ocean/ocean.mp4" as="video" type="video/mp4">
+  <link rel="preload" href="/images/ocean/ocean.ogv" as="video" type="video/ogg">
+  <link rel="preload" href="/images/ocean/ocean.webm" as="video" type="video/webm">
+  <!-- 引入图片查看器库类 -->
+  
+<script src="/js/viewer.min.js"></script>
+
+
+  
+<script src="/js/pace.min.js"></script>
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+<body>
+<main class="content">
+  <section class="outer">
+  <article id="post-给hexo博文页面加入图片查看器" class="article article-type-post" itemscope
+  itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+    <header class="article-header">
+      
+  
+    <h1 class="article-title" itemprop="name">
+      给hexo博文页面加入图片查看器
+    </h1>
+  
+  
+
+
+
+
+    </header>
+    
+
+    
+    <div class="article-meta">
+      <a href="/2020/02/27/%E7%BB%99hexo%E5%8D%9A%E6%96%87%E9%A1%B5%E9%9D%A2%E5%8A%A0%E5%85%A5%E5%9B%BE%E7%89%87%E6%9F%A5%E7%9C%8B%E5%99%A8/" class="article-date">
+  <time datetime="2020-02-27T15:32:04.000Z" itemprop="datePublished">2020-02-27</time>
+</a>
+      
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E5%8D%9A%E5%AE%A2%E6%80%BB%E7%BB%93/">博客总结</a>
+  </div>
+
+    </div>
+    
+
+    
+    
+    <div class="tocbot"></div>
+
+
+
+
+
+    
+
+    <div class="article-entry" itemprop="articleBody">
+      
+
+
+      
+
+      
+      <h2 id="在hexo博客中，Markdown生成的界面无法对图片进行放大等操作，不便于阅读。通过引入viewerjs图片阅读器，可以实现点击图片进行放缩等功能。"><a href="#在hexo博客中，Markdown生成的界面无法对图片进行放大等操作，不便于阅读。通过引入viewerjs图片阅读器，可以实现点击图片进行放缩等功能。" class="headerlink" title="在hexo博客中，Markdown生成的界面无法对图片进行放大等操作，不便于阅读。通过引入viewerjs图片阅读器，可以实现点击图片进行放缩等功能。"></a>在hexo博客中，Markdown生成的界面无法对图片进行放大等操作，不便于阅读。通过引入viewerjs图片阅读器，可以实现点击图片进行放缩等功能。</h2><a id="more"></a>
+<p>今天在手机上看博客时，我发现博文中插入的脑图无法放大，根本看不清。使用电脑时可以直接放缩页面，但在因为适配了移动端，在手机上无法对页面放缩。<br>如下图：</p>
+<img src="/2020/02/27/%E7%BB%99hexo%E5%8D%9A%E6%96%87%E9%A1%B5%E9%9D%A2%E5%8A%A0%E5%85%A5%E5%9B%BE%E7%89%87%E6%9F%A5%E7%9C%8B%E5%99%A8/%E5%8E%9F%E7%94%9FMarkdown%E7%94%9F%E6%88%90%E7%9A%84%E7%95%8C%E9%9D%A2%E6%97%A0%E6%B3%95%E5%AF%B9%E5%9B%BE%E7%89%87%E6%93%8D%E4%BD%9C.jpg" class="article-image" width="480" height="480" title="原生Markdown生成的界面无法对图片操作">
+
+<p>我在网上搜了一下解决办法，目前好像没有特别好用的插件，看到<a href="https://blog.dazo66.com/2018/10/11/viewerjstutorial/" target="_blank" rel="noopener">为你的Hexo博客添加图片查看器</a>这篇博客，他使用了viewerjs插件，实现的功能正是我所需要的。于是晚上对自己使用的主题配置了一下，加入了viewerjs图片查看插件，点击页面上的图片，即可进行放缩等功能，见下图：</p>
+<img src="/2020/02/27/%E7%BB%99hexo%E5%8D%9A%E6%96%87%E9%A1%B5%E9%9D%A2%E5%8A%A0%E5%85%A5%E5%9B%BE%E7%89%87%E6%9F%A5%E7%9C%8B%E5%99%A8/%E7%A7%BB%E5%8A%A8%E7%AB%AF%E6%B5%8F%E8%A7%88%E5%99%A8%E4%BD%BF%E7%94%A8viewerjs%E5%9B%BE%E7%89%87%E6%9F%A5%E7%9C%8B%E5%99%A8%E7%9A%84%E6%95%88%E6%9E%9C.jpg" class="article-image" width="480" height="960" title="移动端浏览器使用viewerjs图片查看器的效果">
+
+<h2 id="1-安装viewerjs"><a href="#1-安装viewerjs" class="headerlink" title="1.安装viewerjs"></a>1.安装viewerjs</h2><p><a href="https://github.com/fengyuanchen/viewerjs" target="_blank" rel="noopener">viewerjs</a>是一个JavaScript写的图片查看器，可以在网页中查看图片。<br>在博客根目录下运行：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install viewerjs</span><br></pre></td></tr></table></figure>
+<p>安装成功后可以在npm安装路径下<code>\node_modules</code>找到<code>viererjs</code>。</p>
+<h2 id="2-导入viewerjs"><a href="#2-导入viewerjs" class="headerlink" title="2.导入viewerjs"></a>2.导入viewerjs</h2><h3 id="（1）在主题模板中引入"><a href="#（1）在主题模板中引入" class="headerlink" title="（1）在主题模板中引入"></a>（1）在主题模板中引入</h3><p>如果要在浏览器中使用viewerjs图片查看器，需要在页面上导入：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;link  href&#x3D;&quot;&#x2F;path&#x2F;to&#x2F;viewer.css&quot; rel&#x3D;&quot;stylesheet&quot;&gt;</span><br><span class="line">&lt;script src&#x3D;&quot;&#x2F;path&#x2F;to&#x2F;viewer.js&quot;&gt;&lt;&#x2F;script&gt;</span><br></pre></td></tr></table></figure>
+<p>但是使用hexo主题，自动生成静态网页，需要在主题模板中导入。我使用的<a href="https://github.com/zhwangart/hexo-theme-ocean" target="_blank" rel="noopener">ocean主题</a>在<code>head.ejs</code>的<code>&lt;head&gt;&lt;/head&gt;</code>中，加入：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- 引入图片查看器库类 --&gt;</span><br><span class="line">&lt;%- css(&#39;css&#x2F;viewer.min.css&#39;) %&gt;</span><br><span class="line">&lt;%- js(&#39;&#x2F;js&#x2F;viewer.min.js&#39;) %&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-复制css和js文件"><a href="#2-复制css和js文件" class="headerlink" title="(2)复制css和js文件"></a>(2)复制css和js文件</h3><p>由于hexo主题资源下并没有这两个文件，需要从npm的安装目录(\node_modules\viewerjs\dist)找到viewer.min.css，viewer.min.js这两个文件，分别复制到主题的js和css文件夹中。我使用的<a href="https://github.com/zhwangart/hexo-theme-ocean" target="_blank" rel="noopener">ocean主题</a>在</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">\themes\ocean\source\css</span><br><span class="line">\themes\ocean\source\js</span><br></pre></td></tr></table></figure>
+<p>这两个文件夹下。<br>这样，在执行<code>hexo g</code>生成页面时，<code>&lt;head&gt;&lt;/head&gt;</code>部分会自动加上：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;link  href&#x3D;&quot;&#x2F;path&#x2F;to&#x2F;viewer.css&quot; rel&#x3D;&quot;stylesheet&quot;&gt;</span><br><span class="line">&lt;script src&#x3D;&quot;&#x2F;path&#x2F;to&#x2F;viewer.js&quot;&gt;&lt;&#x2F;script&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="（3）在主题模板中写入js代码"><a href="#（3）在主题模板中写入js代码" class="headerlink" title="（3）在主题模板中写入js代码"></a>（3）在主题模板中写入js代码</h3><p><code>.getElementsByClassName(&#39;class-name&#39;);</code>通过读取HTML标签，可以将所有ClassName为’class-name’的图片获取， <a href="https://blog.dazo66.com/2018/10/11/viewerjstutorial/" target="_blank" rel="noopener">Dazo66’s Blog</a>针对hexo博客写了一个完整的配置，我将他的代码引用贴在这里：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- 图片查看器实例配置 --&gt;</span><br><span class="line">&lt;script type&#x3D;&quot;text&#x2F;javascript&quot;&gt;</span><br><span class="line">  &#x2F;&#x2F;默认设置， 可以根据个人需求和喜好进行配置</span><br><span class="line">  &#x2F;&#x2F;详细参考官方说明</span><br><span class="line">  Viewer.setDefaults(&#123;</span><br><span class="line">      &#x2F;&#x2F;设置初始缩放 default: 1</span><br><span class="line">      zoomRatio : [0.5],</span><br><span class="line">      &#x2F;&#x2F;设置滚轮缩放比率 default: 0.1</span><br><span class="line">      show: function () &#123;</span><br><span class="line">        this.viewer.zoomTo(0.5);</span><br><span class="line">      &#125;,</span><br><span class="line">    &#125;);</span><br><span class="line">  &#x2F;&#x2F;获得content中所有的图片， 不同主题可能有所不同</span><br><span class="line">  &#x2F;&#x2F;为了和其他的图片区别开来 所以在markdown中插入图片的时候使用独特的记号</span><br><span class="line">  &#x2F;&#x2F;为了一次性得到所有的图片我这里采用的是class &#x3D; &#39;article-image&#39;</span><br><span class="line">  var article &#x3D; document.querySelector(&#39;.post-content&#39;);</span><br><span class="line">  var imageList &#x3D; article.getElementsByClassName(&#39;article-image&#39;);</span><br><span class="line">  &#x2F;&#x2F;将获取到的HTMLCollections转化成Array</span><br><span class="line">  var imageArray &#x3D; new Array();</span><br><span class="line">  Array.prototype.forEach.call(imageList, element &#x3D;&gt; &#123;</span><br><span class="line">    imageArray.push(element);</span><br><span class="line">  &#125;);</span><br><span class="line">  &#x2F;&#x2F;设置每个图片成为图片组</span><br><span class="line">  Array.prototype.forEach.call(imageList, element &#x3D;&gt; &#123;</span><br><span class="line">    var viewer1 &#x3D; new Viewer(element);</span><br><span class="line">    viewer1.images &#x3D; imageArray;</span><br><span class="line">    viewer1.length &#x3D; imageArray.length;</span><br><span class="line">  &#125;);</span><br><span class="line">&lt;&#x2F;script&gt;</span><br></pre></td></tr></table></figure>
+<p>将这段代码放入<code>article.ejs</code>代码最后，这样在生成博客页面时，就自动加入到页面代码中了。<br>在上面的配置中，会一次性将所有<code>class=artical-image</code>的图片读入列表，便于使用viewerjs查看器查看，在写博客时，只需在标签中指明<code>class=&quot;article-image&quot;</code>即可，比如我在插入本文第一张图时，Markdown应写为：</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;% asset_img article-image 原生Markdown生成的界面无法对图片操作.jpg 480 480 原生Markdown生成的界面无法对图片操作 %&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<p>本文参考：</p>
+<ul>
+<li><a href="https://blog.dazo66.com/2018/10/11/viewerjstutorial/" target="_blank" rel="noopener">Dazo66’s Blog</a></li>
+<li><a href="https://github.com/fengyuanchen/viewerjs" target="_blank" rel="noopener">viewerjs</a></li>
+</ul>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kity@2.0.4/dist/kity.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text/javascript" src="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.css">
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2020/02/27/%E7%BB%99hexo%E5%8D%9A%E6%96%87%E9%A1%B5%E9%9D%A2%E5%8A%A0%E5%85%A5%E5%9B%BE%E7%89%87%E6%9F%A5%E7%9C%8B%E5%99%A8/" data-id="ck750bxnt00069gto2i7c1iuj" class="article-share-link">Share</a>
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%8D%9A%E5%AE%A2/" rel="tag">博客</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%80%BB%E7%BB%93/" rel="tag">总结</a></li></ul>
+
+    </footer>
+
+  </div>
+
+  
+  
+  <nav class="article-nav">
+    
+    
+      <a href="/2020/02/26/%E5%89%8D%E7%AB%AF%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%80%EF%BC%89/" class="article-nav-link">
+        <strong class="article-nav-caption">Older</strong>
+        <div class="article-nav-title">前端基础（一）</div>
+      </a>
+    
+  </nav>
+
+
+  
+
+  
+  
+  
+
+</article>
+
+<!-- 图片查看器实例配置 -->
+<script type="text/javascript">
+  //默认设置， 可以根据个人需求和喜好进行配置
+  //详细参考官方说明
+  Viewer.setDefaults({
+    //设置初始缩放 default: 1
+    zoomRatio: [0.5],
+    //设置滚轮缩放比率 default: 0.1
+    show: function () {
+      this.viewer.zoomTo(0.5);
+    },
+  });
+  //获得content中所有的图片， 不同主题可能有所不同
+  //为了和其他的图片区别开来 所以在markdown中插入图片的时候使用独特的记号
+  //为了一次性得到所有的图片我这里采用的是class = 'article-image'
+  var article = document.querySelector('.content');
+  var imageList = article.getElementsByClassName('article-image');
+  //将获取到的HTMLCollections转化成Array
+  var imageArray = new Array();
+  Array.prototype.forEach.call(imageList, element => {
+    imageArray.push(element);
+  });
+  //设置每个图片成为图片组
+  Array.prototype.forEach.call(imageList, element => {
+    var viewer1 = new Viewer(element);
+    viewer1.images = imageArray;
+    viewer1.length = imageArray.length;
+  });
+</script>
+</section>
+  <footer class="footer">
+  <div class="outer">
+    <div class="float-right">
+      <ul class="list-inline">
+  
+    <li><i class="fe fe-smile-alt"></i> <span id="busuanzi_value_site_uv"></span></li>
+  
+    <li><i class="fe fe-bookmark"></i> <span id="busuanzi_value_page_pv"></span></li>
+  
+</ul>
+    </div>
+    <ul class="list-inline">
+      <li>&copy; 2020 Yihe Wei</li>
+      <li>Powered by <a href="http://hexo.io/" target="_blank">Hexo</a></li>
+      <li>Theme  <a href="https://github.com/zhwangart/hexo-theme-ocean" target="_blank" rel="noopener">Ocean</a></li>
+    </ul>
+  </div>
+</footer>
+</main>
+<aside class="sidebar">
+  <button class="navbar-toggle"></button>
+<style type="text/css">
+  #github-logo a span {
+    display: none;
+  }
+
+  #github-logo:hover a span {
+    display: initial;
+  }
+
+  #github-logo:hover a img {
+    display: none;
+  }
+</style>
+<nav class="navbar">
+  
+  <div class="github-logo">
+    <a href="https://github.com/weicrane" target="_blank" rel="noopener">
+      <img src="/images/GitHub-Mark-32px.png" alt="My Github">
+      <span>
+        <p>To My Github</p>
+      </span>
+    </a>
+  </div>
+  
+  <ul class=" nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">Home</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">Archives</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">Categories</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/about">About</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link nav-item-search" title="Search">
+        <i class="fe fe-search"></i>
+        Search
+      </a>
+    </li>
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      <div class="totop" id="totop">
+  <i class="fe fe-rocket"></i>
+</div>
+    </li>
+    <li class="nav-item">
+      
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+        <i class="fe fe-feed"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+</aside>
+
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+<script src="/js/jquery.justifiedGallery.min.js"></script>
+
+
+<script src="/js/lazyload.min.js"></script>
+
+
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+  
+<script src="/js/tocbot.min.js"></script>
+
+  <script>
+    // Tocbot_v4.7.0  http://tscanlin.github.io/tocbot/
+    tocbot.init({
+      tocSelector: '.tocbot',
+      contentSelector: '.article-entry',
+      headingSelector: 'h1, h2, h3, h4, h5, h6',
+      hasInnerContainers: true,
+      scrollSmooth: true,
+      positionFixedSelector: '.tocbot',
+      positionFixedClass: 'is-position-fixed',
+      fixedSidebarOffset: 'auto',
+    });
+  </script>
+
+
+
+<script src="/js/ocean.js"></script>
+
+
+</body>
+</html>
