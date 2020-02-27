@@ -22,9 +22,19 @@
 <link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
 
   
+  <!-- 图片查看器库类 -->
+  
+<link rel="stylesheet" href="/css/viewer.min.css">
+
+
   <link rel="preload" href="/images/ocean/ocean.mp4" as="video" type="video/mp4">
   <link rel="preload" href="/images/ocean/ocean.ogv" as="video" type="video/ogg">
   <link rel="preload" href="/images/ocean/ocean.webm" as="video" type="video/webm">
+  <!-- 引入图片查看器库类 -->
+  
+<script src="/js/viewer.min.js"></script>
+
+
   
 <script src="/js/pace.min.js"></script>
 
@@ -32,14 +42,13 @@
 <body>
 <main class="content">
   <section class="outer">
-  
+  <article id="page-" class="article article-type-page" itemscope
+  itemprop="blogPost" data-scroll-reveal>
 
-<article id="page-" class="article article-type-page" itemscope itemprop="blogPost" data-scroll-reveal>
-  
   <div class="article-inner">
     
-      <header class="article-header">
-        
+    <header class="article-header">
+      
   
     <h1 class="article-title" itemprop="name">
       categories
@@ -50,7 +59,7 @@
 
 
 
-      </header>
+    </header>
     
 
     
@@ -64,19 +73,18 @@
       
 
       
-        
+      
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/categories/index.html" data-id="ck7478wgy0001rkto3hiibptq"
-         class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/categories/index.html" data-id="ck7478wgy0001rkto3hiibptq" class="article-share-link">Share</a>
       
     </footer>
 
   </div>
 
   
-    
+  
 
   
 
@@ -84,8 +92,35 @@
 
 </article>
 
-
-
+<!-- 图片查看器实例配置 -->
+<script type="text/javascript">
+  //默认设置， 可以根据个人需求和喜好进行配置
+  //详细参考官方说明
+  Viewer.setDefaults({
+    //设置初始缩放 default: 1
+    zoomRatio: [0.5],
+    //设置滚轮缩放比率 default: 0.1
+    show: function () {
+      this.viewer.zoomTo(0.5);
+    },
+  });
+  //获得content中所有的图片， 不同主题可能有所不同
+  //为了和其他的图片区别开来 所以在markdown中插入图片的时候使用独特的记号
+  //为了一次性得到所有的图片我这里采用的是class = 'article-image'
+  var article = document.querySelector('.content');
+  var imageList = article.getElementsByClassName('article-image');
+  //将获取到的HTMLCollections转化成Array
+  var imageArray = new Array();
+  Array.prototype.forEach.call(imageList, element => {
+    imageArray.push(element);
+  });
+  //设置每个图片成为图片组
+  Array.prototype.forEach.call(imageList, element => {
+    var viewer1 = new Viewer(element);
+    viewer1.images = imageArray;
+    viewer1.length = imageArray.length;
+  });
+</script>
 </section>
   <footer class="footer">
   <div class="outer">
@@ -103,7 +138,6 @@
     </ul>
   </div>
 </footer>
-
 </main>
 <aside class="sidebar">
   <button class="navbar-toggle"></button>
