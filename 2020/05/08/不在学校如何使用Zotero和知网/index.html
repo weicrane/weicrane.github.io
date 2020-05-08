@@ -93,16 +93,27 @@
       <p>添加代理设置，让 Zotero 能够识别通过 VPN 访问的知网文献。</p>
 <a id="more"></a>
 
-<p>自从师兄那里得知<a href="https://www.zotero.org/" target="_blank" rel="noopener">Zotero</a> 这个开源的文献管理软件，便弃坑 EndNote。配合坚果云的免费存储空间，可以随时同步文献，非常方便。但是最近在家访问知网发现 Zotero Connector 插件无法识别文献，只能保存为网页。按照论坛提供的问题自查，发现完全正常。这个时候我意识到问题很可能出在 Zotero Connector 对 URL 的识别上。<br>当正常访问知网的时候，输入浏览器中的 URL 为<code>https://www.cnki.net/</code>；而当通过学校 VPN 访问时，URL 会变为<code>http://elib.cugb.edu.cn/https/77726476706e69737468656265737421e7e056d2243e635930068cb8/</code>，进入高级检索页面，URL 为<code>http://elib.cugb.edu.cn/https/77726476706e69737468656265737421fbf952d2243e635930068cb8/kns/brief/result.aspx</code>。于是猜测， Zotero Connector 无法识别代理后的链接导致了问题。<a href="https://www.linxingzhong.top/posts/2019-11-5/" target="_blank" rel="noopener">Zotero 知网 CNKI 网页识别</a>这篇博文证实并详细解释了原理。<br>那接下来需要解决的就是如何让 Zotero Connector 识别新的链接。好在其提供了 Proxies 设置。  </p>
+<p>自从师兄那里得知<a href="https://www.zotero.org/" target="_blank" rel="noopener">Zotero</a> 这个开源的文献管理软件，便弃坑 EndNote。配合坚果云的免费存储空间，可以随时同步文献，非常方便。但是最近在家访问知网发现 Zotero Connector 插件无法识别文献，只能保存为网页。按照论坛提供的问题自查，发现完全正常。这个时候我意识到问题很可能出在 Zotero Connector 对 URL 的识别上。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 正常访问知网，输入浏览器中的 URL 为</span><br><span class="line">https:&#x2F;&#x2F;www.cnki.net&#x2F;</span><br><span class="line">&#x2F;&#x2F; 通过学校 VPN 访问，URL 变为</span><br><span class="line">http:&#x2F;&#x2F;elib.cugb.edu.cn&#x2F;https&#x2F;77726476706e69737468656265737421e7e056d2243e635930068cb8&#x2F;</span><br><span class="line">&#x2F;&#x2F; 进入高级检索页面，URL 为</span><br><span class="line">http:&#x2F;&#x2F;elib.cugb.edu.cn&#x2F;https&#x2F;77726476706e69737468656265737421fbf952d2243e635930068cb8&#x2F;kns&#x2F;brief&#x2F;result.aspx</span><br></pre></td></tr></table></figure>
+
+<p>于是猜测， Zotero Connector 无法识别代理后的链接导致了问题。<a href="https://www.linxingzhong.top/posts/2019-11-5/" target="_blank" rel="noopener">Zotero 知网 CNKI 网页识别</a>这篇博文证实并详细解释了原理。<br>那接下来需要解决的就是如何让 Zotero Connector 识别新的链接。好在其提供了 Proxies 设置。  </p>
 <img src="/2020/05/08/%E4%B8%8D%E5%9C%A8%E5%AD%A6%E6%A0%A1%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8Zotero%E5%92%8C%E7%9F%A5%E7%BD%91/zotero%E4%BB%A3%E7%90%86%E8%AE%BE%E7%BD%AE.png" class="article-image" title="Zotero Connector代理设置">  
-<p>对比代理前后访问知网的 URL，可以发现主域名从<font color=ff6666><code>www.cnki.net</code></font>变为<font color=ff6666><code>elib.cugb.edu.cn/https/77726476706e69737468656265737421e7e056d2243e635930068cb8/</code></font>。<br>根据上图的规则，需要在 <strong>Configured Proxies</strong> 处添加代理配置：<br><font color=0fabbc><code>elib.cugb.edu.cn/https/77726476706e69737468656265737421fbf952d2243e635930068cb8/%p</code></font>，由于当前缺少指向知网的域名，需要为 <strong>Hostnames</strong> 设置为<font color=0fabbc><code>www.cnki.net</code></font>。<br>刷新知网检索结果页面:</p>
+<p>对比代理前后访问知网的 URL，可以发现</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 主域名</span><br><span class="line">www.cnki.net</span><br><span class="line">&#x2F;&#x2F; 代理后的主域名</span><br><span class="line">elib.cugb.edu.cn&#x2F;https&#x2F;77726476706e69737468656265737421e7e056d2243e635930068cb8&#x2F;</span><br></pre></td></tr></table></figure>
+
+<p>根据上图的规则，需要在 <strong>Configured Proxies</strong> 处添加代理配置，并且由于缺少指向知网的域名，需要添加 <strong>Hostnames</strong> 。</p>
+<img src="/2020/05/08/%E4%B8%8D%E5%9C%A8%E5%AD%A6%E6%A0%A1%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8Zotero%E5%92%8C%E7%9F%A5%E7%BD%91/%E4%BB%A3%E7%90%86%E8%AE%BE%E7%BD%AE.png" class="article-image" title="代理设置">
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; Configured Proxies添加</span><br><span class="line">elib.cugb.edu.cn&#x2F;https&#x2F;77726476706e69737468656265737421fbf952d2243e635930068cb8&#x2F;%p</span><br><span class="line">&#x2F;&#x2F; Hostnames添加</span><br><span class="line">www.cnki.net</span><br></pre></td></tr></table></figure>
+
+<p>刷新知网检索结果页面:</p>
 <img src="/2020/05/08/%E4%B8%8D%E5%9C%A8%E5%AD%A6%E6%A0%A1%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8Zotero%E5%92%8C%E7%9F%A5%E7%BD%91/%E6%88%90%E5%8A%9F%E8%AF%86%E5%88%AB.png" class="article-image" title="成功识别文献，黄色的提示关闭即可">  
 <p>已经可以识别出文献了,黄色的提示关闭即可。</p>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kity@2.0.4/dist/kity.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text/javascript" src="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.css">
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/05/08/%E4%B8%8D%E5%9C%A8%E5%AD%A6%E6%A0%A1%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8Zotero%E5%92%8C%E7%9F%A5%E7%BD%91/" data-id="ck9ycvpo90007iwto3dq0dyjc" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2020/05/08/%E4%B8%8D%E5%9C%A8%E5%AD%A6%E6%A0%A1%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8Zotero%E5%92%8C%E7%9F%A5%E7%BD%91/" data-id="ck9yep02h000764to8npc2g3x" class="article-share-link">Share</a>
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Zotero/" rel="tag">Zotero</a></li></ul>
 
