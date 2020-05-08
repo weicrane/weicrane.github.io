@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>
+    不在学校如何使用Zotero和知网 |
+    
+    Yihe Wei</title>
+  
+  <link rel="shortcut icon" href="/favicon.ico">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  <!-- 图片查看器库类 -->
+  
+<link rel="stylesheet" href="/css/viewer.min.css">
+
+
+  <link rel="preload" href="/images/ocean/ocean.mp4" as="video" type="video/mp4">
+  <link rel="preload" href="/images/ocean/ocean.ogv" as="video" type="video/ogg">
+  <link rel="preload" href="/images/ocean/ocean.webm" as="video" type="video/webm">
+  <!-- 引入图片查看器库类 -->
+  
+<script src="/js/viewer.min.js"></script>
+
+
+  
+<script src="/js/pace.min.js"></script>
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+<body>
+<main class="content">
+  <section class="outer">
+  <article id="post-不在学校如何使用Zotero和知网" class="article article-type-post" itemscope
+  itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+    <header class="article-header">
+      
+  
+    <h1 class="article-title" itemprop="name">
+      不在学校如何使用Zotero和知网
+    </h1>
+  
+  
+
+
+
+
+    </header>
+    
+
+    
+    <div class="article-meta">
+      <a href="/2020/05/08/%E4%B8%8D%E5%9C%A8%E5%AD%A6%E6%A0%A1%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8Zotero%E5%92%8C%E7%9F%A5%E7%BD%91/" class="article-date">
+  <time datetime="2020-05-08T04:02:47.000Z" itemprop="datePublished">2020-05-08</time>
+</a>
+      
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Tools/">Tools</a>
+  </div>
+
+    </div>
+    
+
+    
+    
+
+
+
+
+    
+
+    <div class="article-entry" itemprop="articleBody">
+      
+
+
+      
+
+      
+      <p>添加代理设置，让 Zotero 能够识别通过 VPN 访问的知网文献。</p>
+<a id="more"></a>
+
+<p>自从师兄那里得知<a href="https://www.zotero.org/" target="_blank" rel="noopener">Zotero</a> 这个开源的文献管理软件，便弃坑 EndNote。配合坚果云的免费存储空间，可以随时同步文献，非常方便。但是最近在家访问知网发现 Zotero Connector 插件无法识别文献，只能保存为网页。按照论坛提供的问题自查，发现完全正常。这个时候我意识到问题很可能出在 Zotero Connector 对 URL 的识别上。<br>当正常访问知网的时候，输入浏览器中的 URL 为<code>https://www.cnki.net/</code>；而当通过学校 VPN 访问时，URL 会变为<code>http://elib.cugb.edu.cn/https/77726476706e69737468656265737421e7e056d2243e635930068cb8/</code>，进入高级检索页面，URL 为<code>http://elib.cugb.edu.cn/https/77726476706e69737468656265737421fbf952d2243e635930068cb8/kns/brief/result.aspx</code>。于是猜测， Zotero Connector 无法识别代理后的链接导致了问题。<a href="https://www.linxingzhong.top/posts/2019-11-5/" target="_blank" rel="noopener">Zotero 知网 CNKI 网页识别</a>这篇博文证实并详细解释了原理。<br>那接下来需要解决的就是如何让 Zotero Connector 识别新的链接。好在其提供了 Proxies 设置。  </p>
+<img src="/2020/05/08/%E4%B8%8D%E5%9C%A8%E5%AD%A6%E6%A0%A1%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8Zotero%E5%92%8C%E7%9F%A5%E7%BD%91/zotero%E4%BB%A3%E7%90%86%E8%AE%BE%E7%BD%AE.png" class="article-image" title="Zotero Connector代理设置">  
+<p>对比代理前后访问知网的 URL，可以发现主域名从<font color=ff6666><code>www.cnki.net</code></font>变为<font color=ff6666><code>elib.cugb.edu.cn/https/77726476706e69737468656265737421e7e056d2243e635930068cb8/</code></font>。<br>根据上图的规则，需要在 <strong>Configured Proxies</strong> 处添加代理配置：<br><font color=0fabbc><code>elib.cugb.edu.cn/https/77726476706e69737468656265737421fbf952d2243e635930068cb8/%p</code></font>，由于当前缺少指向知网的域名，需要为 <strong>Hostnames</strong> 设置为<font color=0fabbc><code>www.cnki.net</code></font>。<br>刷新知网检索结果页面:</p>
+<img src="/2020/05/08/%E4%B8%8D%E5%9C%A8%E5%AD%A6%E6%A0%A1%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8Zotero%E5%92%8C%E7%9F%A5%E7%BD%91/%E6%88%90%E5%8A%9F%E8%AF%86%E5%88%AB.png" class="article-image" title="成功识别文献，黄色的提示关闭即可">  
+<p>已经可以识别出文献了,黄色的提示关闭即可。</p>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kity@2.0.4/dist/kity.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text/javascript" src="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.css">
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2020/05/08/%E4%B8%8D%E5%9C%A8%E5%AD%A6%E6%A0%A1%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8Zotero%E5%92%8C%E7%9F%A5%E7%BD%91/" data-id="ck9ycvpo90007iwto3dq0dyjc" class="article-share-link">Share</a>
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Zotero/" rel="tag">Zotero</a></li></ul>
+
+    </footer>
+
+  </div>
+
+  
+  
+  <nav class="article-nav">
+    
+    
+      <a href="/2020/02/27/%E7%BB%99hexo%E5%8D%9A%E6%96%87%E9%A1%B5%E9%9D%A2%E5%8A%A0%E5%85%A5%E5%9B%BE%E7%89%87%E6%9F%A5%E7%9C%8B%E5%99%A8/" class="article-nav-link">
+        <strong class="article-nav-caption">Older</strong>
+        <div class="article-nav-title">给hexo博文页面加入图片查看器</div>
+      </a>
+    
+  </nav>
+
+
+  
+
+  
+  
+  
+
+</article>
+
+<!-- 图片查看器实例配置 -->
+<script type="text/javascript">
+  //默认设置， 可以根据个人需求和喜好进行配置
+  //详细参考官方说明
+  Viewer.setDefaults({
+    //设置初始缩放 default: 1
+    zoomRatio: [0.5],
+    //设置滚轮缩放比率 default: 0.1
+    show: function () {
+      this.viewer.zoomTo(0.5);
+    },
+  });
+  //获得content中所有的图片， 不同主题可能有所不同
+  //为了和其他的图片区别开来 所以在markdown中插入图片的时候使用独特的记号
+  //为了一次性得到所有的图片我这里采用的是class = 'article-image'
+  var article = document.querySelector('.content');
+  var imageList = article.getElementsByClassName('article-image');
+  //将获取到的HTMLCollections转化成Array
+  var imageArray = new Array();
+  Array.prototype.forEach.call(imageList, element => {
+    imageArray.push(element);
+  });
+  //设置每个图片成为图片组
+  Array.prototype.forEach.call(imageList, element => {
+    var viewer1 = new Viewer(element);
+    viewer1.images = imageArray;
+    viewer1.length = imageArray.length;
+  });
+</script>
+</section>
+  <footer class="footer">
+  <div class="outer">
+    <div class="float-right">
+      <ul class="list-inline">
+  
+    <li><i class="fe fe-smile-alt"></i> <span id="busuanzi_value_site_uv"></span></li>
+  
+    <li><i class="fe fe-bookmark"></i> <span id="busuanzi_value_page_pv"></span></li>
+  
+</ul>
+    </div>
+    <ul class="list-inline">
+      <li>&copy; 2020 Yihe Wei</li>
+      <li>Powered by <a href="http://hexo.io/" target="_blank">Hexo</a></li>
+      <li>Theme  <a href="https://github.com/zhwangart/hexo-theme-ocean" target="_blank" rel="noopener">Ocean</a></li>
+    </ul>
+  </div>
+</footer>
+</main>
+<aside class="sidebar">
+  <button class="navbar-toggle"></button>
+<style type="text/css">
+  #github-logo a span {
+    display: none;
+  }
+
+  #github-logo:hover a span {
+    display: initial;
+  }
+
+  #github-logo:hover a img {
+    display: none;
+  }
+</style>
+<nav class="navbar">
+  
+  <div class="github-logo">
+    <a href="https://github.com/weicrane" target="_blank" rel="noopener">
+      <img src="/images/GitHub-Mark-32px.png" alt="My Github">
+      <span>
+        <p>To My Github</p>
+      </span>
+    </a>
+  </div>
+  
+  <ul class=" nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">Home</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">Archives</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">Categories</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/about">About</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link nav-item-search" title="Search">
+        <i class="fe fe-search"></i>
+        Search
+      </a>
+    </li>
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      <div class="totop" id="totop">
+  <i class="fe fe-rocket"></i>
+</div>
+    </li>
+    <li class="nav-item">
+      
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+        <i class="fe fe-feed"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+</aside>
+
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+<script src="/js/jquery.justifiedGallery.min.js"></script>
+
+
+<script src="/js/lazyload.min.js"></script>
+
+
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+  
+<script src="/js/tocbot.min.js"></script>
+
+  <script>
+    // Tocbot_v4.7.0  http://tscanlin.github.io/tocbot/
+    tocbot.init({
+      tocSelector: '.tocbot',
+      contentSelector: '.article-entry',
+      headingSelector: 'h1, h2, h3, h4, h5, h6',
+      hasInnerContainers: true,
+      scrollSmooth: true,
+      positionFixedSelector: '.tocbot',
+      positionFixedClass: 'is-position-fixed',
+      fixedSidebarOffset: 'auto',
+    });
+  </script>
+
+
+
+<script src="/js/ocean.js"></script>
+
+
+</body>
+</html>
