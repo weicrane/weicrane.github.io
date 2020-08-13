@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>
+    用HTML5和原生JS写一个进度条 |
+    
+    Yihe Wei</title>
+  
+  <link rel="shortcut icon" href="/favicon.ico">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  <!-- 图片查看器库类 -->
+  
+<link rel="stylesheet" href="/css/viewer.min.css">
+
+
+  <link rel="preload" href="/images/ocean/ocean.mp4" as="video" type="video/mp4">
+  <link rel="preload" href="/images/ocean/ocean.ogv" as="video" type="video/ogg">
+  <link rel="preload" href="/images/ocean/ocean.webm" as="video" type="video/webm">
+  <!-- 引入图片查看器库类 -->
+  
+<script src="/js/viewer.min.js"></script>
+
+
+  
+<script src="/js/pace.min.js"></script>
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+<body>
+<main class="content">
+  <section class="outer">
+  <article id="post-用HTML5和原生JS写一个进度条" class="article article-type-post" itemscope
+  itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+    <header class="article-header">
+      
+  
+    <h1 class="article-title" itemprop="name">
+      用HTML5和原生JS写一个进度条
+    </h1>
+  
+  
+
+
+
+
+    </header>
+    
+
+    
+    <div class="article-meta">
+      <a href="/2020/08/13/%E7%94%A8HTML5%E5%92%8C%E5%8E%9F%E7%94%9FJS%E5%86%99%E4%B8%80%E4%B8%AA%E8%BF%9B%E5%BA%A6%E6%9D%A1/" class="article-date">
+  <time datetime="2020-08-13T13:47:39.000Z" itemprop="datePublished">2020-08-13</time>
+</a>
+      
+    </div>
+    
+
+    
+    
+
+
+
+
+    
+
+    <div class="article-entry" itemprop="articleBody">
+      
+
+
+      
+
+      
+      <p>HTML5 对 web 表单有不少更新，比如为<a href="https://developer.mozilla.org/zh-CN/docs/Web/HTML/Element/input" target="_blank" rel="noopener"><code>&lt;input&gt;</code></a>新增了<code>range</code>、<code>date</code>等<code>type</code>属性值。利用<code>range</code>这个<code>type</code>可以很简单地完成一个进度条组件，比用 CSS 写要简洁很多。</p>
+<a id="more"></a>
+
+<p>主要思路：</p>
+<ol>
+<li><code>&lt;input type=&quot;range&quot; id=&quot;progress&quot;/&gt;</code>元素是进度条主体，通过<code>value</code>值控制进度，只要改变<code>value</code>即可实现对进度条的控制。</li>
+<li><code>&lt;input type=&quot;number&quot; id=&quot;value&quot;/&gt;</code>元素获取进度条的<code>value</code>来显示具体的进度条值。通过互相监听<code>input</code>元素的<code>&quot;change&quot;</code>事件实现与进度条主体的数据绑定。</li>
+<li>给左右两侧的加减号监听鼠标<code>click</code>事件，使进度条和百分比值随之更新。</li>
+<li>给进度条增加<code>&quot;mousemove&quot;</code>事件监听赋值给<code>&lt;input type=&quot;number&quot;/&gt;</code>元素，使拖动过程中保持数值的改变。</li>
+</ol>
+<p>实现效果如下：</p>
+<pre>
+  <style>
+    #canvas {
+      width: 400px;
+      height: 200px;
+      margin: 10% auto;
+    }
+
+    #progress-bar {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #value {
+      border: none;
+      width: 2.2em;
+    }
+
+    #value::-webkit-outer-spin-button,
+    #value::-webkit-inner-spin-button {
+      -webkit-appearance: none !important;
+    }
+
+  </style>
+
+<body>
+  <div id="canvas">
+    <div id="progress-bar">
+      <svg id="minus" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="14" height="14">
+        <path
+          d="M911.232 420.565333l0 109.717333q0 22.848-16 38.848t-38.848 16l-694.848 0q-22.848 0-38.848-16t-16-38.848l0-109.717333q0-22.848 16-38.848t38.848-16l694.848 0q22.848 0 38.848 16t16 38.848z">
+        </path>
+      </svg>
+      <input type="range" id="progress" min="0" max="100" step="0.1" value="50.0" />
+      <svg id="plus" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="14" height="14">
+        <path
+          d="M911.232 420.565333l0 109.717333q0 22.848-16 38.848t-38.848 16l-237.717333 0 0 237.717333q0 22.848-16 38.848t-38.848 16l-109.717333 0q-22.848 0-38.848-16t-16-38.848l0-237.717333-237.717333 0q-22.848 0-38.848-16t-16-38.848l0-109.717333q0-22.848 16-38.848t38.848-16l237.717333 0 0-237.717333q0-22.848 16-38.848t38.848-16l109.717333 0q22.848 0 38.848 16t16 38.848l0 237.717333 237.717333 0q22.848 0 38.848 16t16 38.848z">
+        </path>
+      </svg>
+      <input type="number" id="value" min="0" max="100" step="0.1" value="50.0">%</div>
+  </div>
+  </div>
+  <script>
+    const progress = document.getElementById("progress");
+    const minus = document.getElementById("minus");
+    const plus = document.getElementById("plus");
+    const value = document.getElementById("value");
+
+    minus.addEventListener("click", () => {
+      progress.value = Number(progress.value) - 10;
+      value.value = progress.value;
+    });
+    plus.addEventListener("click", () => {
+      progress.value = Number(progress.value) + 10; //注意有坑！value的值是string类型
+      value.value = progress.value;
+    });
+    // 拖动进度条
+    progress.addEventListener("mousemove", () => {
+      value.value = Number(progress.value);
+    });
+    // 监听进度条改变
+    progress.addEventListener("change", () => {
+      value.value = progress.value;
+    });
+    value.addEventListener("change", () => {
+      if (!value.value) {// 输入为空
+        value.value = 0;
+      }
+      if (Number(value.value) >= 100) {// 输入大于100
+        value.value = 100
+      }
+      value.value = Number(value.value)
+      progress.value = value.value;
+    });
+
+  </script>
+</body>
+</pre>
+
+<p>完整代码如下：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"zh-cn"</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span> /&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">"viewport"</span> <span class="attr">content</span>=<span class="string">"width=device-width, initial-scale=1.0"</span> /&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">title</span>&gt;</span>进度条<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="css">    <span class="selector-id">#canvas</span> &#123;</span></span><br><span class="line">      width: 400px;</span><br><span class="line">      height: 200px;</span><br><span class="line">      margin: 10% auto;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="css">    <span class="selector-id">#progress-bar</span> &#123;</span></span><br><span class="line">      display: flex;</span><br><span class="line">      align-items: center;</span><br><span class="line">      justify-content: center;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="css">    <span class="selector-id">#value</span> &#123;</span></span><br><span class="line">      border: none;</span><br><span class="line"><span class="css">      <span class="selector-tag">width</span>: 2<span class="selector-class">.2em</span>;</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="css">    <span class="selector-id">#value</span><span class="selector-pseudo">::-webkit-outer-spin-button</span>,</span></span><br><span class="line"><span class="css">    <span class="selector-id">#value</span><span class="selector-pseudo">::-webkit-inner-spin-button</span> &#123;</span></span><br><span class="line">      -webkit-appearance: none !important;</span><br><span class="line">    &#125;</span><br><span class="line">  <span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"canvas"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"progress-bar"</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">svg</span> <span class="attr">id</span>=<span class="string">"minus"</span> <span class="attr">viewBox</span>=<span class="string">"0 0 1024 1024"</span> <span class="attr">xmlns</span>=<span class="string">"http://www.w3.org/2000/svg"</span> <span class="attr">width</span>=<span class="string">"14"</span> <span class="attr">height</span>=<span class="string">"14"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">path</span></span></span><br><span class="line"><span class="tag">          <span class="attr">d</span>=<span class="string">"M911.232 420.565333l0 109.717333q0 22.848-16 38.848t-38.848 16l-694.848 0q-22.848 0-38.848-16t-16-38.848l0-109.717333q0-22.848 16-38.848t38.848-16l694.848 0q22.848 0 38.848 16t16 38.848z"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">path</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">svg</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"range"</span> <span class="attr">id</span>=<span class="string">"progress"</span> <span class="attr">min</span>=<span class="string">"0"</span> <span class="attr">max</span>=<span class="string">"100"</span> <span class="attr">step</span>=<span class="string">"0.1"</span> <span class="attr">value</span>=<span class="string">"50.0"</span> /&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">svg</span> <span class="attr">id</span>=<span class="string">"plus"</span> <span class="attr">viewBox</span>=<span class="string">"0 0 1024 1024"</span> <span class="attr">xmlns</span>=<span class="string">"http://www.w3.org/2000/svg"</span> <span class="attr">width</span>=<span class="string">"14"</span> <span class="attr">height</span>=<span class="string">"14"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">path</span></span></span><br><span class="line"><span class="tag">          <span class="attr">d</span>=<span class="string">"M911.232 420.565333l0 109.717333q0 22.848-16 38.848t-38.848 16l-237.717333 0 0 237.717333q0 22.848-16 38.848t-38.848 16l-109.717333 0q-22.848 0-38.848-16t-16-38.848l0-237.717333-237.717333 0q-22.848 0-38.848-16t-16-38.848l0-109.717333q0-22.848 16-38.848t38.848-16l237.717333 0 0-237.717333q0-22.848 16-38.848t38.848-16l109.717333 0q22.848 0 38.848 16t16 38.848l0 237.717333 237.717333 0q22.848 0 38.848 16t16 38.848z"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">path</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">svg</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"number"</span> <span class="attr">id</span>=<span class="string">"value"</span> <span class="attr">min</span>=<span class="string">"0"</span> <span class="attr">max</span>=<span class="string">"100"</span> <span class="attr">step</span>=<span class="string">"0.1"</span> <span class="attr">value</span>=<span class="string">"50.0"</span>&gt;</span>%<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="actionscript">    <span class="comment">// 获取DOM元素</span></span></span><br><span class="line"><span class="javascript">    <span class="keyword">const</span> progress = <span class="built_in">document</span>.getElementById(<span class="string">"progress"</span>);</span></span><br><span class="line"><span class="javascript">    <span class="keyword">const</span> minus = <span class="built_in">document</span>.getElementById(<span class="string">"minus"</span>);</span></span><br><span class="line"><span class="javascript">    <span class="keyword">const</span> plus = <span class="built_in">document</span>.getElementById(<span class="string">"plus"</span>);</span></span><br><span class="line"><span class="javascript">    <span class="keyword">const</span> value = <span class="built_in">document</span>.getElementById(<span class="string">"value"</span>);</span></span><br><span class="line"></span><br><span class="line"><span class="actionscript">    <span class="comment">// 监听"-"上的鼠标点击事件</span></span></span><br><span class="line"><span class="actionscript">    minus.addEventListener(<span class="string">"click"</span>, () =&gt; &#123;</span></span><br><span class="line"><span class="javascript">      progress.value = <span class="built_in">Number</span>(progress.value) - <span class="number">10</span>;</span></span><br><span class="line">      value.value = progress.value;</span><br><span class="line">    &#125;);</span><br><span class="line"><span class="actionscript">    plus.addEventListener(<span class="string">"click"</span>, () =&gt; &#123;</span></span><br><span class="line"><span class="javascript">      progress.value = <span class="built_in">Number</span>(progress.value) + <span class="number">10</span>; <span class="comment">// 注意有坑！value的值是string类型</span></span></span><br><span class="line">      value.value = progress.value;</span><br><span class="line">    &#125;);</span><br><span class="line"><span class="actionscript">    <span class="comment">// 监听拖动进度条</span></span></span><br><span class="line"><span class="actionscript">    progress.addEventListener(<span class="string">"mousemove"</span>, () =&gt; &#123;</span></span><br><span class="line"><span class="javascript">      value.value = <span class="built_in">Number</span>(progress.value);</span></span><br><span class="line">    &#125;);</span><br><span class="line"><span class="actionscript">    <span class="comment">// 监听进度条改变</span></span></span><br><span class="line"><span class="actionscript">    progress.addEventListener(<span class="string">"change"</span>, () =&gt; &#123;</span></span><br><span class="line">      value.value = progress.value;</span><br><span class="line">    &#125;);</span><br><span class="line"><span class="actionscript">    <span class="comment">// 监听数值框输入</span></span></span><br><span class="line"><span class="actionscript">    value.addEventListener(<span class="string">"change"</span>, () =&gt; &#123;</span></span><br><span class="line"><span class="actionscript">      <span class="keyword">if</span> (!value.value) &#123;<span class="comment">// 当输入为空的情况</span></span></span><br><span class="line">        value.value = 0;</span><br><span class="line">      &#125;</span><br><span class="line"><span class="javascript">      <span class="keyword">if</span> (<span class="built_in">Number</span>(value.value) &gt;= <span class="number">100</span>) &#123;<span class="comment">// 输入大于100</span></span></span><br><span class="line">        value.value = 100</span><br><span class="line">      &#125;</span><br><span class="line"><span class="javascript">      value.value = <span class="built_in">Number</span>(value.value)</span></span><br><span class="line">      progress.value = value.value;</span><br><span class="line">    &#125;);</span><br><span class="line">  <span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kity@2.0.4/dist/kity.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text/javascript" src="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.css">
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2020/08/13/%E7%94%A8HTML5%E5%92%8C%E5%8E%9F%E7%94%9FJS%E5%86%99%E4%B8%80%E4%B8%AA%E8%BF%9B%E5%BA%A6%E6%9D%A1/" data-id="ckdsuyrvu0000ugtoay9aflia" class="article-share-link">Share</a>
+      
+    </footer>
+
+  </div>
+
+  
+  
+  <nav class="article-nav">
+    
+    
+      <a href="/2020/05/08/%E4%B8%8D%E5%9C%A8%E5%AD%A6%E6%A0%A1%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8Zotero%E5%92%8C%E7%9F%A5%E7%BD%91/" class="article-nav-link">
+        <strong class="article-nav-caption">Older</strong>
+        <div class="article-nav-title">不在学校如何使用Zotero和知网</div>
+      </a>
+    
+  </nav>
+
+
+  
+
+  
+  
+  
+
+</article>
+
+<!-- 图片查看器实例配置 -->
+<script type="text/javascript">
+  //默认设置， 可以根据个人需求和喜好进行配置
+  //详细参考官方说明
+  Viewer.setDefaults({
+    //设置初始缩放 default: 1
+    zoomRatio: [0.5],
+    //设置滚轮缩放比率 default: 0.1
+    show: function () {
+      this.viewer.zoomTo(0.5);
+    },
+  });
+  //获得content中所有的图片， 不同主题可能有所不同
+  //为了和其他的图片区别开来 所以在markdown中插入图片的时候使用独特的记号
+  //为了一次性得到所有的图片我这里采用的是class = 'article-image'
+  var article = document.querySelector('.content');
+  var imageList = article.getElementsByClassName('article-image');
+  //将获取到的HTMLCollections转化成Array
+  var imageArray = new Array();
+  Array.prototype.forEach.call(imageList, element => {
+    imageArray.push(element);
+  });
+  //设置每个图片成为图片组
+  Array.prototype.forEach.call(imageList, element => {
+    var viewer1 = new Viewer(element);
+    viewer1.images = imageArray;
+    viewer1.length = imageArray.length;
+  });
+</script>
+</section>
+  <footer class="footer">
+  <div class="outer">
+    <div class="float-right">
+      <ul class="list-inline">
+  
+    <li><i class="fe fe-smile-alt"></i> <span id="busuanzi_value_site_uv"></span></li>
+  
+    <li><i class="fe fe-bookmark"></i> <span id="busuanzi_value_page_pv"></span></li>
+  
+</ul>
+    </div>
+    <ul class="list-inline">
+      <li>&copy; 2020 Yihe Wei</li>
+      <li>Powered by <a href="http://hexo.io/" target="_blank">Hexo</a></li>
+      <li>Theme  <a href="https://github.com/zhwangart/hexo-theme-ocean" target="_blank" rel="noopener">Ocean</a></li>
+    </ul>
+  </div>
+</footer>
+</main>
+<aside class="sidebar">
+  <button class="navbar-toggle"></button>
+<style type="text/css">
+  #github-logo a span {
+    display: none;
+  }
+
+  #github-logo:hover a span {
+    display: initial;
+  }
+
+  #github-logo:hover a img {
+    display: none;
+  }
+</style>
+<nav class="navbar">
+  
+  <div class="github-logo">
+    <a href="https://github.com/weicrane" target="_blank" rel="noopener">
+      <img src="/images/GitHub-Mark-32px.png" alt="My Github">
+      <span>
+        <p>To My Github</p>
+      </span>
+    </a>
+  </div>
+  
+  <ul class=" nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">Home</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">Archives</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">Categories</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/about">About</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link nav-item-search" title="Search">
+        <i class="fe fe-search"></i>
+        Search
+      </a>
+    </li>
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      <div class="totop" id="totop">
+  <i class="fe fe-rocket"></i>
+</div>
+    </li>
+    <li class="nav-item">
+      
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+        <i class="fe fe-feed"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+</aside>
+
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+<script src="/js/jquery.justifiedGallery.min.js"></script>
+
+
+<script src="/js/lazyload.min.js"></script>
+
+
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+  
+<script src="/js/tocbot.min.js"></script>
+
+  <script>
+    // Tocbot_v4.7.0  http://tscanlin.github.io/tocbot/
+    tocbot.init({
+      tocSelector: '.tocbot',
+      contentSelector: '.article-entry',
+      headingSelector: 'h1, h2, h3, h4, h5, h6',
+      hasInnerContainers: true,
+      scrollSmooth: true,
+      positionFixedSelector: '.tocbot',
+      positionFixedClass: 'is-position-fixed',
+      fixedSidebarOffset: 'auto',
+    });
+  </script>
+
+
+
+<script src="/js/ocean.js"></script>
+
+
+</body>
+</html>

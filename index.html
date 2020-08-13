@@ -74,6 +74,93 @@
       <h1 class="page-type-title"></h1>
       
         
+          <article id="post-用HTML5和原生JS写一个进度条" class="article article-type-post" itemscope
+  itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+    <header class="article-header">
+      
+  
+    <h2 itemprop="name">
+      <a class="article-title" href="/2020/08/13/%E7%94%A8HTML5%E5%92%8C%E5%8E%9F%E7%94%9FJS%E5%86%99%E4%B8%80%E4%B8%AA%E8%BF%9B%E5%BA%A6%E6%9D%A1/">用HTML5和原生JS写一个进度条</a>
+    </h2>
+  
+  
+
+
+
+
+    </header>
+    
+
+    
+    <div class="article-meta">
+      <a href="/2020/08/13/%E7%94%A8HTML5%E5%92%8C%E5%8E%9F%E7%94%9FJS%E5%86%99%E4%B8%80%E4%B8%AA%E8%BF%9B%E5%BA%A6%E6%9D%A1/" class="article-date">
+  <time datetime="2020-08-13T13:47:39.000Z" itemprop="datePublished">2020-08-13</time>
+</a>
+      
+    </div>
+    
+
+    
+
+    <div class="article-entry" itemprop="articleBody">
+      
+
+
+      
+
+      
+      <p>HTML5 对 web 表单有不少更新，比如为<a href="https://developer.mozilla.org/zh-CN/docs/Web/HTML/Element/input" target="_blank" rel="noopener"><code>&lt;input&gt;</code></a>新增了<code>range</code>、<code>date</code>等<code>type</code>属性值。利用<code>range</code>这个<code>type</code>可以很简单地完成一个进度条组件，比用 CSS 写要简洁很多。</p>
+      
+      <a class="article-more-link" href="/2020/08/13/%E7%94%A8HTML5%E5%92%8C%E5%8E%9F%E7%94%9FJS%E5%86%99%E4%B8%80%E4%B8%AA%E8%BF%9B%E5%BA%A6%E6%9D%A1/">Read More...</a>
+      
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2020/08/13/%E7%94%A8HTML5%E5%92%8C%E5%8E%9F%E7%94%9FJS%E5%86%99%E4%B8%80%E4%B8%AA%E8%BF%9B%E5%BA%A6%E6%9D%A1/" data-id="ckdsuyrvu0000ugtoay9aflia" class="article-share-link">Share</a>
+      
+    </footer>
+
+  </div>
+
+  
+
+  
+
+</article>
+
+<!-- 图片查看器实例配置 -->
+<script type="text/javascript">
+  //默认设置， 可以根据个人需求和喜好进行配置
+  //详细参考官方说明
+  Viewer.setDefaults({
+    //设置初始缩放 default: 1
+    zoomRatio: [0.5],
+    //设置滚轮缩放比率 default: 0.1
+    show: function () {
+      this.viewer.zoomTo(0.5);
+    },
+  });
+  //获得content中所有的图片， 不同主题可能有所不同
+  //为了和其他的图片区别开来 所以在markdown中插入图片的时候使用独特的记号
+  //为了一次性得到所有的图片我这里采用的是class = 'article-image'
+  var article = document.querySelector('.content');
+  var imageList = article.getElementsByClassName('article-image');
+  //将获取到的HTMLCollections转化成Array
+  var imageArray = new Array();
+  Array.prototype.forEach.call(imageList, element => {
+    imageArray.push(element);
+  });
+  //设置每个图片成为图片组
+  Array.prototype.forEach.call(imageList, element => {
+    var viewer1 = new Viewer(element);
+    viewer1.images = imageArray;
+    viewer1.length = imageArray.length;
+  });
+</script>
+        
           <article id="post-不在学校如何使用Zotero和知网" class="article article-type-post" itemscope
   itemprop="blogPost" data-scroll-reveal>
 
